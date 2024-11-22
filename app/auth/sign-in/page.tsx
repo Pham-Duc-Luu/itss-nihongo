@@ -1,7 +1,10 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 
 const page = () => {
-  return <div>page</div>;
+  const [name, setName] = useState<string>();
+
+  return <div>sign in</div>;
 };
 
 export default page;
