@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c17ad8a-0d7e-463b-b833-7c1e439c18eb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[local]/notification/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[local]/notification/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[local]/notification/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/messages/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/messages/japanese.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/japanese.json" afterDir="false" />
     </list>
@@ -67,7 +70,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-WS-243.21565.180" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.112" />
       </set>
     </attachedChunks>
   </component>
@@ -84,6 +87,8 @@
       <workItem from="1732846131130" duration="2805000" />
       <workItem from="1732928565592" duration="2071000" />
       <workItem from="1732933946588" duration="4674000" />
+      <workItem from="1733542258890" duration="11852000" />
+      <workItem from="1733648749753" duration="8373000" />
     </task>
     <servers />
   </component>

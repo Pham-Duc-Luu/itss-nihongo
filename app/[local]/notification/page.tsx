@@ -1,73 +1,164 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
+import {
+    Button,
+    Card,
+    Badge,
+    Avatar,
+    Spacer,
+    Grid,
+    Text,
+} from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import supabase from "@/supabase.client";
-import { useEffect, useState } from "react";
-import { Input, Avatar } from "@nextui-org/react";
 
 type Notification = {
     id: number;
-    title: string;
+    type: "mention" | "like" | "comment";
+    content: string;
     time: string;
-    imgSrc: string;
+    isRead: boolean;
+    avatarUrl: string;
 };
 
-export default function NotificationsPage() {
-    const t = useTranslations("notifications");
+const NotificationsPage: React.FC = () => {
+    const t = useTranslations("Notifications");
+
+    // State cho thông báo
+    const [filter, setFilter] = useState<"all" | "unread" | "mentions">("all");
     const [notifications, setNotifications] = useState<Notification[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+
+    // Dữ liệu mẫu
+    const mockNotifications: Notification[] = [
+        {
+            id: 1,
+            type: "mention",
+            content: "Bạn đã được đề cập trong một bài viết.",
+            time: "2 phút trước",
+            isRead: false,
+            avatarUrl: "/avatars/user1.png",
+        },
+        {
+            id: 2,
+            type: "like",
+            content: "Bài viết của bạn đã được thích.",
+            time: "1 giờ trước",
+            isRead: true,
+            avatarUrl: "/avatars/user2.png",
+        },
+        {
+            id: 3,
+            type: "comment",
+            content: "Có một bình luận mới trên bài viết của bạn.",
+            time: "3 giờ trước",
+            isRead: false,
+            avatarUrl: "/avatars/user3.png",
+        },
+        // Thêm nhiều thông báo hơn...
+    ];
 
     useEffect(() => {
-        fetchNotifications();
+        // Thực hiện fetch dữ liệu thực tế hoặc sử dụng dữ liệu mẫu
+        // Ở đây sử dụng dữ liệu mẫu
+        setNotifications(mockNotifications);
     }, []);
 
-    async function fetchNotifications() {
-        setLoading(true);
-        try {
-            const { data, error } = await supabase.from("Notifications").select();
+    const handleFilterChange = (newFilter: "all" | "unread" | "mentions") => {
+        setFilter(newFilter);
+    };
 
-            if (error) {
-                console.error("Error fetching notifications:", error);
-            } else if (data) {
-                setNotifications(data as Notification[]);
-            }
-        } catch (error) {
-            console.error("Unexpected error:", error);
-        } finally {
-            setLoading(false);
-        }
-    }
+    const handleMarkAsRead = (id: number) => {
+        setNotifications((prev) =>
+            prev.map((notification) =>
+                notification.id === id ? { ...notification, isRead: true } : notification
+            )
+        );
+    };
 
     return (
-        <div className="flex flex-col h-full">
-            {/* Header */}
-            <div className="p-4 flex items-center justify-between shadow-md">
-                <div className="w-3/4">
-                    <Input placeholder={t("search.placeholder")} fullWidth />
+        <div className="bg-gray-50 min-h-screen p-6">
+            <div className="max-w-5xl mx-auto">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                    <h1 className="text-3xl font-bold text-gray-800">Thông Báo</h1>
                 </div>
-                <div className="ml-4">
-                    <Avatar src="https://via.placeholder.com/30" size="md" />
-                </div>
-            </div>
 
-            {/* Notifications List */}
-            <div className="flex-grow overflow-y-auto p-4 bg-white">
-                {loading ? (
-                    <p>{t("loading")}</p>
-                ) : notifications.length > 0 ? (
-                    notifications.map((notification) => (
-                        <div key={notification.id} className="flex items-center py-4 border-b">
-                            <Avatar src={notification.imgSrc} size="lg" />
-                            <div className="ml-4">
-                                <p className="font-bold">{notification.title}</p>
-                                <p className="text-sm text-gray-500">{notification.time}</p>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>{t("no_notifications")}</p>
-                )}
+                {/* Bộ Lọc */}
+                <div className="flex justify-start mb-6 space-x-4">
+                    <Button
+                        auto
+                        flat={filter !== "all"}
+                        color={filter === "all" ? "primary" : "default"}
+                        onClick={() => handleFilterChange("all")}
+                    >
+                        Tất cả
+                    </Button>
+                    <Button
+                        auto
+                        flat={filter !== "unread"}
+                        color={filter === "unread" ? "primary" : "default"}
+                        onClick={() => handleFilterChange("unread")}
+                    >
+                        Chưa đọc
+                    </Button>
+                    <Button
+                        auto
+                        flat={filter !== "mentions"}
+                        color={filter === "mentions" ? "primary" : "default"}
+                        onClick={() => handleFilterChange("mentions")}
+                    >
+                        Đề cập
+                    </Button>
+                </div>
+
+                {/* Danh sách thông báo */}
+                <div className="space-y-4">
+                    {notifications
+                        .filter((notification) => {
+                            if (filter === "all") return true;
+                            if (filter === "unread") return !notification.isRead;
+                            if (filter === "mentions") return notification.type === "mention";
+                            return true;
+                        })
+                        .map((notification) => (
+                            <Card
+                                key={notification.id}
+                                isHoverable
+                                variant={notification.isRead ? "flat" : "bordered"}
+                                className={`flex items-center p-4 ${
+                                    notification.isRead ? "bg-white" : "bg-blue-50"
+                                }`}
+                                onClick={() => handleMarkAsRead(notification.id)}
+                            >
+                                <Avatar
+                                    src={notification.avatarUrl}
+                                    size="lg"
+                                    className="flex-shrink-0"
+                                />
+                                <div className="ml-4 flex-1">
+                                    <Text b className="text-gray-800">
+                                        {notification.content}
+                                    </Text>
+                                    <Text small className="text-gray-500">
+                                        {notification.time}
+                                    </Text>
+                                </div>
+                                {!notification.isRead && (
+                                    <Badge
+                                        color="primary"
+                                        size="sm"
+                                        variant="dot"
+                                        className="ml-2"
+                                    >
+                                        Mới
+                                    </Badge>
+                                )}
+                            </Card>
+                        ))}
+                </div>
             </div>
         </div>
     );
-}
+};
+
+export default NotificationsPage;
