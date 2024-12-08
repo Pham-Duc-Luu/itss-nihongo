@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c17ad8a-0d7e-463b-b833-7c1e439c18eb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/[local]/notification/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[local]/notification/layout.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/[local]/notification/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[local]/notification/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages/japanese.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/japanese.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,6 +120,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
