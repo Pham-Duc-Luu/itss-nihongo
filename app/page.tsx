@@ -16,9 +16,9 @@ export default function Home<T>() {
       console.log("start");
 
       const { data, error } = await supabase.from("User").select();
+      const result = await supabase.from("classroom").select();
       console.log(data);
 
-      data && setuser(data);
       console.log(error);
     } catch (error) {
       console.log(error);

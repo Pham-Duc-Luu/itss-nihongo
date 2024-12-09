@@ -105,5 +105,12 @@
     "username": "username",
     "sign in": "sign in",
     "sign up": "sign up"
+  },
+  "notifications": {
+    "loading": "is Loading",
+    "search": {
+      "placeholder": "search for"
+    },
+    "no_notifications": "no_notifications"
   }
 }
