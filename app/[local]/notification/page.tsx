@@ -82,22 +82,14 @@ export default function NotificationsPage() {
 
   return (
     <div className="flex w-full p-5 gap-5">
-      <main className="flex-1">
+      <main className="w-1/4">
         <Card className="p-6 shadow-md">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-4">
-              <h2 className="text-2xl font-bold">Thông Báo</h2>
-              <Badge color="primary" variant="faded">
-                {notifications.filter((notif) => !notif.isRead).length} mới
-              </Badge>
-            </div>
-
-            <div className="flex items-center gap-4">
               <Select
-                label="Lọc"
                 value={filter}
-                placeholder="通知フィルタリング"
+                placeholder="通知"
                 className="w-40"
               >
                 <SelectItem key="all">全部</SelectItem>
@@ -105,7 +97,7 @@ export default function NotificationsPage() {
                 <SelectItem key="read">読んだ</SelectItem>
               </Select>
               <Button color="primary" onClick={markAllAsRead}>
-                すべて既読としてマークする
+                すべてマーク
               </Button>
             </div>
           </div>
@@ -122,25 +114,38 @@ export default function NotificationsPage() {
                 <Card
                   key={notification.id}
                   isHoverable
-                  //   variant={notification.isRead ?"" : "bordered"}
+                  isPressable
+                  onPress={() => !notification.isRead && markAsRead(notification.id)}
                   className={`${
-                    !notification.isRead ? "bg-gray-50" : "bg-white"
-                  }`}
+                      !notification.isRead ? "bg-gray-50 cursor-pointer" : "bg-white"
+                  }  flex items-center p-4 relative`}
                 >
                   <CardBody className="flex items-start">
+                    <div className="mr-3">
+                      {!notification.isRead && (
+                          <div
+                              className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-black"
+                        ></div>
+                        )}
+                    </div>
                     <Avatar
-                      //   text={notification.title.charAt(0)}
-                      color={"default"}
-                      size="lg"
-                      className="mr-4"
+                        color={"default"}
+                        size="lg"
+                        className="mr-4"
                     />
                     <div className="flex-1">
                       <div className="flex justify-between items-center">
-                        <div>{notification.title}</div>
+                        <div
+                            className={`${
+                                !notification.isRead ? "font-semibold" : "font-normal"
+                            }`}
+                        >
+                          {notification.title}
+                        </div>
                         {!notification.isRead && (
-                          <Badge color="primary" variant="faded">
-                            新
-                          </Badge>
+                            <Badge color="primary" variant="faded">
+                              新
+                            </Badge>
                         )}
                       </div>
                       <div className="text-gray-600">
@@ -148,15 +153,6 @@ export default function NotificationsPage() {
                       </div>
                       <div className="flex justify-between items-center mt-2">
                         <div className="text-gray-500">{notification.time}</div>
-                        {!notification.isRead && (
-                          <Button
-                            size="lg"
-                            color="primary"
-                            onClick={() => markAsRead(notification.id)}
-                          >
-                            既読としてマークする
-                          </Button>
-                        )}
                       </div>
                     </div>
                   </CardBody>
