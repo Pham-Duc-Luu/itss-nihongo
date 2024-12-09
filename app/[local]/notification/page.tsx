@@ -27,7 +27,6 @@ export default function NotificationsPage() {
   const [filter, setFilter] = useState<"all" | "unread" | "read">("all");
 
   useEffect(() => {
-    // Giả lập lấy dữ liệu từ API hoặc cơ sở dữ liệu
     const mockNotifications: Notification[] = [
       {
         id: 1,
@@ -67,7 +66,6 @@ export default function NotificationsPage() {
     setNotifications(mockNotifications);
   }, []);
 
-  // Hàm để đánh dấu thông báo đã đọc
   const markAsRead = (id: number) => {
     setNotifications((prev) =>
       prev.map((notif) =>
@@ -76,7 +74,6 @@ export default function NotificationsPage() {
     );
   };
 
-  // Hàm để đánh dấu tất cả thông báo đã đọc
   const markAllAsRead = () => {
     setNotifications((prev) =>
       prev.map((notif) => ({ ...notif, isRead: true }))
@@ -85,7 +82,6 @@ export default function NotificationsPage() {
 
   return (
     <div className="flex w-full p-5 gap-5">
-      {/* Main Content */}
       <main className="flex-1">
         <Card className="p-6 shadow-md">
           {/* Header */}
@@ -96,20 +92,20 @@ export default function NotificationsPage() {
                 {notifications.filter((notif) => !notif.isRead).length} mới
               </Badge>
             </div>
-            {/* Tùy chọn lọc hoặc hành động khác */}
+
             <div className="flex items-center gap-4">
               <Select
                 label="Lọc"
                 value={filter}
-                placeholder="Lọc thông báo"
+                placeholder="通知フィルタリング"
                 className="w-40"
               >
-                <SelectItem key="all">Tất cả</SelectItem>
-                <SelectItem key="unread">Chưa đọc</SelectItem>
-                <SelectItem key="read">Đã đọc</SelectItem>
+                <SelectItem key="all">全部</SelectItem>
+                <SelectItem key="unread">読んでいない</SelectItem>
+                <SelectItem key="read">読んだ</SelectItem>
               </Select>
               <Button color="primary" onClick={markAllAsRead}>
-                Đánh dấu tất cả đã đọc
+                すべて既読としてマークする
               </Button>
             </div>
           </div>
@@ -143,7 +139,7 @@ export default function NotificationsPage() {
                         <div>{notification.title}</div>
                         {!notification.isRead && (
                           <Badge color="primary" variant="faded">
-                            Mới
+                            新
                           </Badge>
                         )}
                       </div>
@@ -158,7 +154,7 @@ export default function NotificationsPage() {
                             color="primary"
                             onClick={() => markAsRead(notification.id)}
                           >
-                            Đánh dấu đã đọc
+                            既読としてマークする
                           </Button>
                         )}
                       </div>

@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c17ad8a-0d7e-463b-b833-7c1e439c18eb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/[local]/notification/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/[local]/notification/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[local]/notification/page.tsx" afterDir="false" />
     </list>
@@ -87,6 +86,7 @@
       <workItem from="1732933946588" duration="4674000" />
       <workItem from="1733542258890" duration="11852000" />
       <workItem from="1733648749753" duration="8373000" />
+      <workItem from="1733716326693" duration="4995000" />
     </task>
     <servers />
   </component>
@@ -94,6 +94,11 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="ac13c0c4-acae-4c9c-a3f0-355fdb583bf6" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -116,6 +121,11 @@
                 </map>
               </option>
             </State>
+          </value>
+        </entry>
+        <entry key="ac13c0c4-acae-4c9c-a3f0-355fdb583bf6">
+          <value>
+            <State />
           </value>
         </entry>
       </map>
