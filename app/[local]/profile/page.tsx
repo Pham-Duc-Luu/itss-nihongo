@@ -1,160 +1,134 @@
-// app/page.tsx
+"use client";
+
+import { Input, Button, Select, SelectItem, Card, Avatar } from "@nextui-org/react";
+
 export default function UserProfilePage() {
   return (
-    <div style={{ display: "flex", padding: "20px" }}>
-      {/* Sidebar */}
-      <aside style={{ width: "200px", marginRight: "20px" }}>
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          <li
-            style={{ padding: "10px 0", fontWeight: "bold", color: "#007BFF" }}
-          >
-            ユーザー情報
-          </li>
-        </ul>
-      </aside>
-
+    <div className="flex w-full p-5 gap-5">
       {/* Main Content */}
-      <main
-        style={{
-          flexGrow: 1,
-          backgroundColor: "#ffffff",
-          borderRadius: "8px",
-          padding: "20px",
-          boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <div style={{ marginBottom: "20px" }}>
-          <h2 style={{ margin: 0 }}>Alexa Rawles</h2>
-          <p style={{ color: "#888", margin: 0 }}>alexarawles@gmail.com</p>
-        </div>
-
-        <form>
-          {/* Name and Nickname */}
-          <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
-            <div style={{ flex: 1 }}>
-              <label>名前</label>
-              <input
-                type="text"
-                defaultValue="Alexa Rawles"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  marginTop: "5px",
-                  borderRadius: "4px",
-                  border: "1px solid #ccc",
-                }}
+      <main className="flex-1">
+        <Card className="p-6 shadow-md">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center gap-4">
+              {/* Profile Picture */}
+              <Avatar
+                src="https://via.placeholder.com/100"
+                alt="Profile Picture"
+                size="lg"
+                className="rounded-full"
               />
+              {/* User Info */}
+              <div>
+                <h2 className="text-xl font-bold mb-1">Alexa Rawles</h2>
+                <p className="text-gray-500">alexarawles@gmail.com</p>
+              </div>
             </div>
-            <div style={{ flex: 1 }}>
-              <label>ニックネーム</label>
-              <input
-                type="text"
-                defaultValue="Alexa"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  marginTop: "5px",
-                  borderRadius: "4px",
-                  border: "1px solid #ccc",
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Gender and Country */}
-          <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
-            <div style={{ flex: 1 }}>
-              <label>性別</label>
-              <select
-                defaultValue="女性"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  marginTop: "5px",
-                  borderRadius: "4px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <option value="女性">女性</option>
-                <option value="男性">男性</option>
-              </select>
-            </div>
-            <div style={{ flex: 1 }}>
-              <label>国</label>
-              <select
-                defaultValue="アメリカ"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  marginTop: "5px",
-                  borderRadius: "4px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <option value="アメリカ">アメリカ</option>
-                <option value="日本">日本</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Language and Timezone */}
-          <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
-            <div style={{ flex: 1 }}>
-              <label>言語</label>
-              <select
-                defaultValue="日本語"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  marginTop: "5px",
-                  borderRadius: "4px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <option value="日本語">日本語</option>
-                <option value="英語">英語</option>
-              </select>
-            </div>
-            <div style={{ flex: 1 }}>
-              <label>時間帯</label>
-              <select
-                defaultValue="UTC +9"
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  marginTop: "5px",
-                  borderRadius: "4px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <option value="UTC +9">UTC +9</option>
-                <option value="UTC +0">UTC +0</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Email Section */}
-          <div>
-            <p style={{ marginBottom: "10px" }}>私のメールアドレス</p>
-            <p style={{ marginBottom: "20px", color: "#888" }}>
-              alexarawles@gmail.com{" "}
-              <span style={{ fontSize: "12px" }}>1ヶ月前</span>
-            </p>
-            <button
-              type="button"
-              style={{
-                backgroundColor: "#007BFF",
-                color: "#fff",
-                padding: "10px 20px",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
+            {/* Save Button */}
+            <Button
+              color="primary"
+              variant="flat"
+              className="ml-auto"
+              css={{ padding: "10px 20px", fontSize: "14px" }}
             >
-              メールアドレスを追加
-            </button>
+              Save
+            </Button>
           </div>
-        </form>
+
+          {/* Form */}
+          <form>
+            {/* Name and Nickname */}
+            <div className="flex gap-5 mb-6">
+              <div className="flex-1">
+                <Input
+                  label="名前"
+                  placeholder="名前を入力してください"
+                  defaultValue="Alexa Rawles"
+                  fullWidth
+                />
+              </div>
+              <div className="flex-1">
+                <Input
+                  label="ニックネーム"
+                  placeholder="ニックネームを入力してください"
+                  defaultValue="Alexa"
+                  fullWidth
+                />
+              </div>
+            </div>
+
+            {/* Gender and Country */}
+            <div className="flex gap-5 mb-6">
+              <div className="flex-1">
+                <Select
+                  label="性別"
+                  defaultValue="女性"
+                  placeholder="性別を選択してください"
+                  fullWidth
+                >
+                  <SelectItem value="女性">女性</SelectItem>
+                  <SelectItem value="男性">男性</SelectItem>
+                </Select>
+              </div>
+              <div className="flex-1">
+                <Select
+                  label="国"
+                  defaultValue="アメリカ"
+                  placeholder="国を選択してください"
+                  fullWidth
+                >
+                  <SelectItem value="アメリカ">アメリカ</SelectItem>
+                  <SelectItem value="日本">日本</SelectItem>
+                </Select>
+              </div>
+            </div>
+
+            {/* Language and Timezone */}
+            <div className="flex gap-5 mb-6">
+              <div className="flex-1">
+                <Select
+                  label="言語"
+                  defaultValue="日本語"
+                  placeholder="言語を選択してください"
+                  fullWidth
+                >
+                  <SelectItem value="日本語">日本語</SelectItem>
+                  <SelectItem value="英語">英語</SelectItem>
+                </Select>
+              </div>
+              <div className="flex-1">
+                <Select
+                  label="時間帯"
+                  defaultValue="UTC +9"
+                  placeholder="時間帯を選択してください"
+                  fullWidth
+                >
+                  <SelectItem value="UTC +9">UTC +9</SelectItem>
+                  <SelectItem value="UTC +0">UTC +0</SelectItem>
+                </Select>
+              </div>
+            </div>
+
+            {/* Email Section */}
+            <div>
+              <p className="mb-2 text-sm font-medium">私のメールアドレス</p>
+              <div className="flex items-center gap-2 mb-4">
+                {/* Small Avatar */}
+                <Avatar
+                  src="https://via.placeholder.com/40"
+                  alt="Email Icon"
+                  size="sm"
+                  className="rounded-full"
+                />
+                <div>
+                  <p className="text-gray-500">alexarawles@gmail.com</p>
+                  <p className="text-xs text-gray-400">1ヶ月前</p>
+                </div>
+              </div>
+              <Button color="primary">メールアドレスを追加</Button>
+            </div>
+          </form>
+        </Card>
       </main>
     </div>
   );
