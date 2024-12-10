@@ -105,5 +105,12 @@
     "username": "username",
     "sign in": "sign in",
     "sign up": "sign up"
+  },
+
+  "Notifications": {
+    "title": "Notifications",
+    "all": "All",
+    "unread": "Unread",
+    "mentions": "Mentions"
   }
 }

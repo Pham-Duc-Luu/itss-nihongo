@@ -1,6 +1,13 @@
 "use client";
 
-import { Input, Button, Select, SelectItem, Card, Avatar } from "@nextui-org/react";
+import {
+  Input,
+  Button,
+  Select,
+  SelectItem,
+  Card,
+  Avatar,
+} from "@nextui-org/react";
 
 export default function UserProfilePage() {
   return (
