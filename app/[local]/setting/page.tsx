@@ -1,4 +1,9 @@
 import React from "react";
+import { RiComputerLine } from "react-icons/ri";
+import { GrLanguage } from "react-icons/gr";
+import { AiOutlineTranslation } from "react-icons/ai";
+import { GiJapan } from "react-icons/gi";
+import { RiTimeZoneFill } from "react-icons/ri";
 
 const LanguageAndRegionPage = () => {
   return (
@@ -67,9 +72,7 @@ const LanguageAndRegionPage = () => {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src="/icons/display-language-icon.svg"
-                    alt="icon"
+                  <RiComputerLine
                     style={{ width: "24px", height: "24px", marginRight: "12px" }}
                   />
                   表示言語
@@ -93,12 +96,10 @@ const LanguageAndRegionPage = () => {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src="/icons/priority-language-icon.svg"
-                    alt="icon"
+                  <GrLanguage 
                     style={{ width: "24px", height: "24px", marginRight: "12px" }}
                   />
-                  優先する言語
+                    
                 </div>
                 <span style={{ marginLeft: "36px", fontWeight: "normal" }}>
                   Japanese (Japan) ; Vietnamese (Vietnam)
@@ -121,9 +122,7 @@ const LanguageAndRegionPage = () => {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src="/icons/translation-icon.svg"
-                    alt="icon"
+                  <AiOutlineTranslation 
                     style={{ width: "24px", height: "24px", marginRight: "12px" }}
                   />
                   翻訳
@@ -155,9 +154,7 @@ const LanguageAndRegionPage = () => {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src="/icons/region-icon.svg"
-                    alt="icon"
+                  <GiJapan 
                     style={{ width: "24px", height: "24px", marginRight: "12px" }}
                   />
                   地域設定
@@ -183,9 +180,7 @@ const LanguageAndRegionPage = () => {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src="/icons/timezone-icon.svg"
-                    alt="icon"
+                  <RiTimeZoneFill 
                     style={{ width: "24px", height: "24px", marginRight: "12px" }}
                   />
                   タイムゾーン

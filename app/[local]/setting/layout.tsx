@@ -1,4 +1,9 @@
-import React from "react";
+
+import Navbar from "@/components/navbar";
+import Sidebar from "@/components/Sidebar";
+import Navbar1 from "@/components/navbar1";
+import Sidebar1 from "@/components/sidebar1";
+import { Divider } from "@nextui-org/react";
 
 export default function RootLayout({
   children,
@@ -7,49 +12,28 @@ export default function RootLayout({
 }>) {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      {/* Navbar */}
-      <header className="bg-blue-600 text-white shadow-md p-4">
-        <h1 className="text-xl font-bold">設定画面</h1>
-      </header>
+      {/* Thanh Navbar bên ngoài */}
+      <Navbar />
 
-      {/* Main Content */}
       <div className="flex flex-1">
-        {/* Sidebar */}
-        <aside className="w-64 bg-gray-800 text-white flex flex-col">
-          <nav className="flex-1">
-            <ul className="p-4 space-y-4">
-              <li>
-                <a href="#" className="block p-2 rounded hover:bg-gray-700">
-                  インストール
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block p-2 rounded hover:bg-gray-700">
-                  ご連絡
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block p-2 rounded hover:bg-gray-700">
-                  セキュリティ
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block p-2 rounded hover:bg-gray-700">
-                  言語
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block p-2 rounded hover:bg-gray-700">
-                  インターフェイス
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </aside>
+        {/* Thanh Sidebar bên ngoài */}
+        <Sidebar />
 
-        {/* Main Children */}
-        <div className="flex-1 p-6 bg-white shadow-lg rounded-lg">
-          {children}
+        {/* Khu vực chính chứa Sidebar nhỏ và nội dung */}
+        
+          <div className="flex flex-1">
+            {/* Thanh Sidebar nhỏ bên trong */}
+            <Sidebar1 />
+            
+            <div className="flex flex-1 flex-col">
+            {/* Thanh Navbar nhỏ bên trong */}
+            <Navbar1 />
+
+            {/* Nội dung chính */}
+            <main className="flex-1 p-6 bg-white shadow-lg rounded-lg overflow-auto">
+              {children}
+            </main>
+          </div>
         </div>
       </div>
     </div>
