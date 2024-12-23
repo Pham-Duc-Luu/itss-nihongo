@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1c17ad8a-0d7e-463b-b833-7c1e439c18eb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[local]/notification/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[local]/notification/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +67,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.112" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.222" />
       </set>
     </attachedChunks>
   </component>
@@ -87,6 +88,8 @@
       <workItem from="1733648749753" duration="8373000" />
       <workItem from="1733716326693" duration="11953000" />
       <workItem from="1733801252017" duration="2331000" />
+      <workItem from="1734945377331" duration="593000" />
+      <workItem from="1734946273410" duration="12387000" />
     </task>
     <servers />
   </component>

@@ -9,7 +9,12 @@ import {
   Avatar,
   Badge,
   CardBody,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@nextui-org/react";
+import { FiSettings } from "react-icons/fi";
 import { useState, useEffect } from "react";
 
 interface Notification {
@@ -80,31 +85,45 @@ export default function NotificationsPage() {
     );
   };
 
+
   return (
     <div className="flex w-full p-5 gap-5">
       <main className="w-1/4">
         <Card className="p-6 shadow-md">
           {/* Header */}
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex items-center gap-4">
+          <div className="flex justify-between items-center mb-4 border-b border-gray-200 pb-4">
               <Select
-                value={filter}
-                placeholder="通知"
-                className="w-40"
+                  value={filter}
+                  variant="underlined"
+                  placeholder="通知"
+                  className="w-32"
               >
-                <SelectItem key="all">全部</SelectItem>
-                <SelectItem key="unread">読んでいない</SelectItem>
-                <SelectItem key="read">読んだ</SelectItem>
+                <SelectItem key="all" value="all">全部</SelectItem>
+                <SelectItem key="unread" value="unread">読んでいない</SelectItem>
+                <SelectItem key="read" value="read">読んだ</SelectItem>
               </Select>
-              <Button color="primary" onClick={markAllAsRead}>
-                すべてマーク
-              </Button>
-            </div>
+            <Dropdown className="right-auto" placement="bottom-end">
+              <DropdownTrigger>
+                <Button
+                    isIconOnly={true}
+                    variant={"light"}
+                >
+                    <FiSettings />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownItem key="mark" onClick={markAllAsRead}>
+                  すべてマーク
+                </DropdownItem>
+                <DropdownItem key="settings">
+                  通知設定
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </div>
 
-          {/* Danh sách thông báo */}
           <div className="space-y-4">
-            {notifications
+          {notifications
               .filter((notif) => {
                 if (filter === "all") return true;
                 if (filter === "unread") return !notif.isRead;
