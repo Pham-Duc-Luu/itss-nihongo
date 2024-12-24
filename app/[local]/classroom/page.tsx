@@ -11,7 +11,7 @@ import {
   Divider,
   Link,
 } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -24,6 +24,7 @@ import {
 import { IoIosAddCircleOutline, IoIosVideocam } from "react-icons/io";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { CgMailReply, CgPushChevronRightR } from "react-icons/cg";
+import { supabase } from "@/supabase.client";
 
 const PostReplyContent = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
@@ -61,27 +62,49 @@ const PostReplyContent = () => {
   );
 };
 const TeamPostContent = () => {
-  const [name, setname] = useState("namme");
+  useEffect(() => {
+    if (window.localStorage.getItem("classroom")) {
+      const classroom = JSON.parse(window.localStorage.getItem("classroom"));
+
+      const fetchPosts = async (classroomId: string) => {
+        const { data, error } = await supabase
+          .from("post")
+          .select("id, content, time, sender:sender_id(id, name), classroom_id")
+          .eq("classroom_id", classroomId);
+
+        console.log(data);
+        data && setPost(data[0]);
+      };
+
+      classroom.id && fetchPosts(classroom.id);
+    }
+  }, [window.localStorage.getItem("classroom")]);
+  const [post, setPost] = useState({
+    sender: {
+      id: 200500388,
+      name: "Nguyen Thi Thu Huong",
+    },
+    classroom_id: 140656,
+    content:
+      "Moi nguoi nho chuan bi tot cho buoi thao luan nhom vao chieu thu 3.",
+    id: 20355745,
+
+    time: "2024-12-05T15:00:00",
+  });
   return (
     <div className=" flex  items-start w-full gap-4 p-2 flex-1">
       <div>
-        <Avatar size="md" name={name[0].toUpperCase()}></Avatar>
+        <Avatar size="md" name={post?.sender?.name?.toUpperCase()}></Avatar>
       </div>
       <Card radius="sm">
         <div className="m-2">
-          <span className=" font-bold mr-2">Any one's name</span>
-          <span>11/11</span>
+          <span className=" font-bold mr-2">{post?.sender?.name}</span>
+          <span>
+            {new Date(post?.time).getMonth()} / {new Date(post?.time).getDay()}
+          </span>
         </div>
-        <CardBody>
-          <p>Make beautiful websites regardless of your design experience.</p>
-          Make beautiful websites regardless of your design experienceMake
-          beautiful websites regardless of your design experienceMake beautiful
-          websites regardless of your design experienceMake beautiful websites
-          regardless of your design experienceMake beautiful websites regardless
-          of your design experienceMake beautiful websites regardless of your
-          design experience
-        </CardBody>
-        <PostReplyContent></PostReplyContent>
+        <CardBody>{post?.content}</CardBody>
+        {/* <PostReplyContent></PostReplyContent> */}
         <Divider></Divider>
         <CardFooter className=" flex">
           <CgMailReply />
@@ -92,6 +115,13 @@ const TeamPostContent = () => {
   );
 };
 const page = () => {
+  useEffect(() => {
+    if (window.localStorage.getItem("classroom")) {
+      const classroom = JSON.parse(window.localStorage.getItem("classroom"));
+      classroom?.name && setname(classroom.name);
+    }
+  }, [window.localStorage.getItem("classroom")]);
+
   const [name, setname] = useState("namme");
 
   return (

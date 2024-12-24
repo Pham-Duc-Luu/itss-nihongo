@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { FaGoogle, FaLine } from "react-icons/fa";
-import supabase from "@/supabase.client";
+import { supabase } from "@/supabase.client";
 const signUpSchema = z
   .object({
     name: z.string().min(1, "Name is required"),
@@ -40,14 +40,17 @@ const page = () => {
     setIsVisibleRePassword(!isVisiblePassWord);
 
   const onSubmit = async (data: SignUpFormValues) => {
-    const user = await supabase
-      .from("User")
-      .insert({
-        email: data.email,
-        password: data.password,
-        name: data.name,
-        role: "student",
-      });
+    let { data: User } = await supabase.from("User").insert({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      role: "student",
+    });
+    if (User[0]) {
+      window.localStorage.setItem("user", JSON.stringify(User[0]));
+
+      route.push("/classroom");
+    }
   };
   return (
     <div className=" bg-emerald-200 min-h-screen">
