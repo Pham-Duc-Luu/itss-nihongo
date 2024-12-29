@@ -1,5 +1,6 @@
 "use client";
 
+import { supabase } from "@/supabase.client";
 import {
   Input,
   Button,
@@ -8,8 +9,33 @@ import {
   Card,
   Avatar,
 } from "@nextui-org/react";
+import { useEffect, useState } from "react";
 
 export default function UserProfilePage() {
+  const [user, setUser] = useState();
+  useEffect(() => {
+    if (window?.localStorage?.getItem("user")) {
+      setUser(JSON.parse(window?.localStorage?.getItem("user")?.toString()));
+    }
+  }, []);
+
+  async function updateUser(userId: number, newValues: Record<string, any>) {
+    try {
+      const { data, error } = await supabase
+        .from("User")
+        .update(newValues)
+        .eq("id", userId);
+
+      if (error) {
+        throw error;
+      }
+      console.log("User updated:", data);
+      window?.localStorage?.setItem("user", JSON.stringify(newValues));
+      return data;
+    } catch (error) {
+      console.error("Error updating user:", error.message);
+    }
+  }
   return (
     <div className="flex w-full p-5 gap-5">
       {/* Main Content */}
@@ -27,8 +53,8 @@ export default function UserProfilePage() {
               />
               {/* User Info */}
               <div>
-                <h2 className="text-xl font-bold mb-1">Alexa Rawles</h2>
-                <p className="text-gray-500">alexarawles@gmail.com</p>
+                <h2 className="text-xl font-bold mb-1">{user?.name}</h2>
+                <p className="text-gray-500">{user?.email}</p>
               </div>
             </div>
             {/* Save Button */}
@@ -36,6 +62,7 @@ export default function UserProfilePage() {
               color="primary"
               variant="flat"
               className="ml-auto"
+              onClick={(e) => updateUser(user?.id, user)}
               css={{ padding: "10px 20px", fontSize: "14px" }}
             >
               Save
@@ -49,6 +76,8 @@ export default function UserProfilePage() {
               <div className="flex-1">
                 <Input
                   label="名前"
+                  value={user?.name}
+                  onChange={(e) => setUser({ ...user, name: e.target.value })}
                   placeholder="名前を入力してください"
                   defaultValue="Alexa Rawles"
                   fullWidth
@@ -128,7 +157,7 @@ export default function UserProfilePage() {
                   className="rounded-full"
                 />
                 <div>
-                  <p className="text-gray-500">alexarawles@gmail.com</p>
+                  <p className="text-gray-500">{user?.name}</p>
                   <p className="text-xs text-gray-400">1ヶ月前</p>
                 </div>
               </div>

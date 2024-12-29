@@ -1,5 +1,6 @@
 "use client";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { FiSend } from "react-icons/fi";
 import {
   Avatar,
   Button,
@@ -9,6 +10,7 @@ import {
   CardFooter,
   CardHeader,
   Divider,
+  Input,
   Link,
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
@@ -25,7 +27,13 @@ import { IoIosAddCircleOutline, IoIosVideocam } from "react-icons/io";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { CgMailReply, CgPushChevronRightR } from "react-icons/cg";
 import { supabase } from "@/supabase.client";
-
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
+import { IoPersonAddOutline } from "react-icons/io5";
 const PostReplyContent = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
   return (
@@ -61,10 +69,10 @@ const PostReplyContent = () => {
     </>
   );
 };
-const TeamPostContent = () => {
+const TeamPostContent = ({ classroom, count }) => {
   useEffect(() => {
-    if (window.localStorage.getItem("classroom")) {
-      const classroom = JSON.parse(window.localStorage.getItem("classroom"));
+    if (classroom) {
+      console.log(classroom);
 
       const fetchPosts = async (classroomId: string) => {
         const { data, error } = await supabase
@@ -73,59 +81,91 @@ const TeamPostContent = () => {
           .eq("classroom_id", classroomId);
 
         console.log(data);
-        data && setPost(data[0]);
+        data && setPosts(data);
       };
 
       classroom.id && fetchPosts(classroom.id);
     }
-  }, [window.localStorage.getItem("classroom")]);
-  const [post, setPost] = useState({
-    sender: {
-      id: 200500388,
-      name: "Nguyen Thi Thu Huong",
-    },
-    classroom_id: 140656,
-    content:
-      "Moi nguoi nho chuan bi tot cho buoi thao luan nhom vao chieu thu 3.",
-    id: 20355745,
+  }, [classroom, count]);
 
-    time: "2024-12-05T15:00:00",
-  });
+  const [posts, setPosts] = useState([]);
+
+  if (!posts || posts.length === 0) {
+    return;
+  }
+
   return (
-    <div className=" flex  items-start w-full gap-4 p-2 flex-1">
-      <div>
-        <Avatar size="md" name={post?.sender?.name?.toUpperCase()}></Avatar>
-      </div>
-      <Card radius="sm">
-        <div className="m-2">
-          <span className=" font-bold mr-2">{post?.sender?.name}</span>
-          <span>
-            {new Date(post?.time).getMonth()} / {new Date(post?.time).getDay()}
-          </span>
-        </div>
-        <CardBody>{post?.content}</CardBody>
-        {/* <PostReplyContent></PostReplyContent> */}
-        <Divider></Divider>
-        <CardFooter className=" flex">
-          <CgMailReply />
-          <span>reply</span>
-        </CardFooter>
-      </Card>
-    </div>
+    <>
+      {posts.map((post) => {
+        return (
+          <div className=" flex  items-start w-full gap-4 p-2 flex-1">
+            <div>
+              <Avatar
+                size="md"
+                name={post?.sender?.name?.toUpperCase()}
+              ></Avatar>
+            </div>
+            <Card radius="sm" className=" min-w-[600px]">
+              <div className="m-2">
+                <span className=" font-bold mr-2">{post?.sender?.name}</span>
+                <span>
+                  {new Date(post?.time).getMonth()} /{" "}
+                  {new Date(post?.time).getDay()}
+                </span>
+              </div>
+              <CardBody>{post?.content}</CardBody>
+              {/* <PostReplyContent></PostReplyContent> */}
+              <Divider></Divider>
+              <CardFooter className=" flex">
+                <CgMailReply />
+                <span>reply</span>
+              </CardFooter>
+            </Card>
+          </div>
+        );
+      })}
+    </>
   );
 };
-const page = () => {
+
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
+const ClassroomContent = ({ classroom }) => {
+  const [isExistClass, setisExistClass] = useState(false);
   useEffect(() => {
+    console.log(classroom);
+
     if (window.localStorage.getItem("classroom")) {
       const classroom = JSON.parse(window.localStorage.getItem("classroom"));
       classroom?.name && setname(classroom.name);
+      setisExistClass(true);
+    } else {
+      setisExistClass(false);
     }
-  }, [window.localStorage.getItem("classroom")]);
+  }, [classroom]);
 
   const [name, setname] = useState("namme");
-
+  const [user, setUser] = useState();
+  const [message, setMessage] = useState("");
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (window?.localStorage.getItem("user")) {
+      setUser(JSON.parse(window?.localStorage.getItem("user")));
+    }
+  }, []);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [addEmail, setAddEmail] = useState();
+  if (!isExistClass) {
+    return;
+  }
   return (
-    <div className=" flex-1">
+    <div className=" flex-1 relative">
       <Navbar
         position="static"
         className="h-12"
@@ -174,9 +214,22 @@ const page = () => {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="end">
           <ButtonGroup>
-            <Button variant="ghost" isIconOnly>
-              <HiOutlineDotsHorizontal />
-            </Button>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant="ghost" isIconOnly>
+                  <HiOutlineDotsHorizontal />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem
+                  onClick={onOpen}
+                  startContent={<IoPersonAddOutline />}
+                  key="new"
+                >
+                  生徒を追加
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
 
             <Button variant="ghost" isIconOnly>
               <IoIosVideocam />
@@ -188,9 +241,91 @@ const page = () => {
         </NavbarContent>
       </Navbar>
       <Divider></Divider>
-      <TeamPostContent></TeamPostContent>
+      <TeamPostContent count={count} classroom={classroom}></TeamPostContent>
+      <Input
+        endContent={
+          <FiSend
+            onClick={() => {
+              console.log({ message, classroom, user });
+              if (message && classroom.id && user.id) {
+                supabase
+                  .from("post")
+                  .insert({
+                    content: message,
+                    sender_id: user.id,
+                    classroom_id: classroom.id,
+                  })
+                  .then(() => {
+                    setMessage("");
+                    setCount(count + 1);
+                  });
+              }
+            }}
+          />
+        }
+        variant="bordered"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        className=" absolute bottom-4 p-6"
+      ></Input>
+      <Modal
+        isDismissable={false}
+        isKeyboardDismissDisabled={true}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                生徒を追加
+              </ModalHeader>
+              <ModalBody>
+                <Input
+                  value={addEmail}
+                  onChange={(e) => setAddEmail(e.target.value)}
+                  placeholder="email"
+                ></Input>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="primary"
+                  onPress={async () => {
+                    const result = await supabase
+                      .from("User")
+                      .select("*")
+                      .eq("email", addEmail);
+                    console.log(result);
+
+                    if (result.data?.length === 0) {
+                      window.alert("email not found");
+                    } else if (result.error) {
+                      window.alert(result.error);
+                    } else {
+                      const addNewStudent = await supabase
+                        .from("student_in_classroom")
+                        .insert({
+                          classroom_id: classroom.id,
+                          student_id: result.data[0].id,
+                        });
+
+                      if (addNewStudent.error) {
+                        console.log(addNewStudent);
+
+                        window.alert(addNewStudent.error);
+                      }
+                    }
+                  }}
+                >
+                  追加
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
 
-export default page;
+export default ClassroomContent;

@@ -7,6 +7,7 @@ import { z } from "zod";
 import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import { FaGoogle, FaLine } from "react-icons/fa";
 import { supabase } from "@/supabase.client";
+import { useRouter } from "@/i18n/routing";
 const signUpSchema = z
   .object({
     name: z.string().min(1, "Name is required"),
@@ -30,7 +31,7 @@ const page = () => {
   });
 
   const [isVisiblePassWord, setIsVisiblePassWord] = React.useState(false);
-
+  const route = useRouter();
   const toggleVisibilityPassWord = () =>
     setIsVisiblePassWord(!isVisiblePassWord);
 
@@ -40,14 +41,31 @@ const page = () => {
     setIsVisibleRePassword(!isVisiblePassWord);
 
   const onSubmit = async (data: SignUpFormValues) => {
-    let { data: User } = await supabase.from("User").insert({
+    console.log(data);
+
+    let existUser = await supabase
+      .from("User")
+      .select()
+      .eq("email", data.email);
+
+    if (existUser.data && existUser.data.length > 0) {
+      return;
+    }
+
+    let User = await supabase.from("User").insert({
       email: data.email,
       password: data.password,
       name: data.name,
       role: "student",
     });
-    if (User[0]) {
-      window.localStorage.setItem("user", JSON.stringify(User[0]));
+    console.log(User);
+
+    if (!User.error) {
+      let existUser = await supabase
+        .from("User")
+        .select()
+        .eq("email", data.email);
+      window.localStorage.setItem("user", JSON.stringify(existUser.data[0]));
 
       route.push("/classroom");
     }
