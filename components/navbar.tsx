@@ -52,9 +52,10 @@ const Navbar = ({
         ></Input>
         <div
           className={cn(
-            " absolute top-0 w-full translate-y-14 z-10 shadow-md origin-top",
+            " absolute top-0 w-full translate-y-14 z-10 shadow-md origin-top ",
             users.length > 0 && text?.length > 0 ? " " : "hidden"
           )}
+          style={{ zIndex: 999 }}
         >
           {users?.map((item) => {
             return (
