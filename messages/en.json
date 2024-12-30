@@ -91,6 +91,9 @@
     },
     "file": {
       "label": "File"
+    },
+    "profile": {
+      "label": "Profile"
     }
   },
   "landing": {

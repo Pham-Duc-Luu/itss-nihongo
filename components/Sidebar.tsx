@@ -3,9 +3,14 @@ import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import React from "react";
 import { AiOutlineMessage, AiOutlineTeam } from "react-icons/ai";
-import { CiBellOn, CiFileOn } from "react-icons/ci";
+import { CiBellOn, CiFileOn, CiLogout } from "react-icons/ci";
+import { FaRegUser } from "react-icons/fa";
 
-const Sidebar = ({ setDisplaySideBar }) => {
+const Sidebar = ({
+  setDisplaySideBar,
+  setisDisPlaySidebar,
+  setDisplayContent,
+}) => {
   const t = useTranslations("sidebar");
   const route = useRouter();
   return (
@@ -14,6 +19,8 @@ const Sidebar = ({ setDisplaySideBar }) => {
         className=" flex justify-center items-center flex-col"
         onClick={() => {
           setDisplaySideBar("notification");
+          setDisplayContent("classroom");
+          setisDisPlaySidebar(true);
         }}
       >
         <CiBellOn size={30} />
@@ -26,7 +33,8 @@ const Sidebar = ({ setDisplaySideBar }) => {
       </div>
       <div
         onClick={() => {
-          setDisplaySideBar("teams");
+          setDisplayContent("teams");
+          setisDisPlaySidebar(false);
         }}
         className=" flex justify-center items-center flex-col"
       >
@@ -34,6 +42,23 @@ const Sidebar = ({ setDisplaySideBar }) => {
       </div>
       <div className=" flex justify-center items-center flex-col">
         <CiFileOn size={30} /> <span>{t("file.label")}</span>
+      </div>
+      <div
+        className=" flex justify-center items-center flex-col"
+        onClick={() => {
+          setDisplayContent("profile");
+          setisDisPlaySidebar(false);
+        }}
+      >
+        <FaRegUser size={30} /> <span>{t("profile.label")}</span>
+      </div>
+      <div
+        className=" flex justify-center items-center flex-col"
+        onClick={() => {
+          route.push("/auth/sign-in");
+        }}
+      >
+        <CiLogout size={30} /> <span>{t("profile.label")}</span>
       </div>
     </div>
   );

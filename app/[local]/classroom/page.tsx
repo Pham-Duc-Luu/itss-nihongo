@@ -34,41 +34,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { IoPersonAddOutline } from "react-icons/io5";
-const PostReplyContent = () => {
-  const [isFollowed, setIsFollowed] = React.useState(false);
-  return (
-    <>
-      <Divider></Divider>
-      <Card className="" radius="sm" shadow="none">
-        <CardHeader className="justify-between">
-          <div className="flex gap-5">
-            <Avatar
-              isBordered
-              radius="full"
-              size="md"
-              src="https://nextui.org/avatars/avatar-1.png"
-            />
-            <div className="flex gap-1 items-start justify-center">
-              <h4 className="text-small font-semibold leading-none text-default-600">
-                Zoey Lang
-              </h4>
-              <h5 className="text-small tracking-tight text-default-400">
-                11/11
-              </h5>
-            </div>
-          </div>
-        </CardHeader>
-        <CardBody className="px-3 py-0 text-small text-default-400 mb-2">
-          Frontend developer and UI/UX enthusiast. Join me on this coding
-          adventure! Frontend developer and UI/UX enthusiast. Join me on this
-          coding adventure! Frontend developer and UI/UX enthusiast. Join me on
-          this coding adventure! Frontend developer and UI/UX enthusiast. Join
-          me on this coding adventure!
-        </CardBody>
-      </Card>
-    </>
-  );
-};
+
 const TeamPostContent = ({ classroom, count }) => {
   useEffect(() => {
     if (classroom) {
@@ -150,7 +116,7 @@ const ClassroomContent = ({ classroom }) => {
     }
   }, [classroom]);
 
-  const [name, setname] = useState("namme");
+  const [name, setname] = useState("");
   const [user, setUser] = useState();
   const [message, setMessage] = useState("");
   const [count, setCount] = useState(0);
@@ -189,12 +155,8 @@ const ClassroomContent = ({ classroom }) => {
         <div className=" flex justify-center items-center gap-4">
           <NavbarBrand>
             <div className=" flex items-center ">
-              <Avatar
-                size="md"
-                radius="lg"
-                name={name[0].toUpperCase()}
-              ></Avatar>
-              <span className=" font-bold">{name}</span>
+              <Avatar size="md" radius="lg" name={classroom?.name[0]}></Avatar>
+              <span className=" font-bold">{classroom?.name}</span>
             </div>
           </NavbarBrand>
           <NavbarContent className="hidden sm:flex gap-4" justify="start">

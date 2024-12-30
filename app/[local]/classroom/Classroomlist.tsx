@@ -1,6 +1,5 @@
 import { supabase } from "@/supabase.client";
 import {
-  Avatar,
   Button,
   Card,
   CardBody,
@@ -15,7 +14,7 @@ import {
 } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const Classroomlist = () => {
   const [listofClass, setlistofClass] = useState();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -62,15 +61,18 @@ const Classroomlist = () => {
     }
   };
   return (
-    <div className=" w-full grid grid-cols-4 gap-6 p-6 relative">
+    <div className=" w-full grid grid-cols-4 gap-6 p-6 relative overflow-y-scroll">
       {listofClass?.map((item, index) => {
         return (
-          <div className=" ">
+          <div className="">
             <Card>
-              <CardHeader className=" flex justify-center items-center gap-4">
-                <Avatar isBordered radius="full" className=" " />
+              <CardHeader className=" flex justify-start items-center gap-4">
+                <Avatar>
+                  <AvatarImage alt="@shadcn" />
+                  <AvatarFallback>{item?.name[0]}</AvatarFallback>
+                </Avatar>
                 <div className=" flex flex-col ">
-                  <h1 className=" text-lg font-bold">{item?.name}</h1>
+                  <h1 className=" text-lg font-bold truncate">{item?.name}</h1>
                   <p>{item?.id}</p>
                 </div>
               </CardHeader>
@@ -81,9 +83,12 @@ const Classroomlist = () => {
           </div>
         );
       })}
-      <Button isIconOnly className=" fixed bottom-4 right-4" onPress={onOpen}>
-        <IoMdAdd />
-      </Button>
+
+      {JSON.parse(window.localStorage.getItem("user"))?.role === "teacher" && (
+        <Button isIconOnly className=" fixed bottom-4 right-4" onPress={onOpen}>
+          <IoMdAdd />
+        </Button>
+      )}
       <Modal isOpen={isOpen} placement="top-center" onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -127,6 +132,7 @@ const Classroomlist = () => {
                   variant="flat"
                   onPress={onClose}
                 ></Button> */}
+
                 <Button
                   color="primary"
                   onPress={() => {
