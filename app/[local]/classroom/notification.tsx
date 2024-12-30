@@ -50,7 +50,7 @@ export default function NotificationsPage({ setClassroom }) {
 
   const [resetPostIn, setresetPostIn] = useState(1000000);
   const [selectedKeys, setSelectedKeys] = useState<Selection>(
-    new Set(["10 seconds"])
+    new Set(["12時間"])
   );
 
   const selectedValue = useMemo(
@@ -127,8 +127,7 @@ export default function NotificationsPage({ setClassroom }) {
               <>
                 <ModalBody>
                   <div>
-                    {" "}
-                    notification me every
+                    通知を受け取る
                     <Dropdown>
                       <DropdownTrigger>
                         <Button className="capitalize" variant="bordered">
@@ -144,47 +143,47 @@ export default function NotificationsPage({ setClassroom }) {
                         onSelectionChange={setSelectedKeys}
                       >
                         <DropdownItem
-                          key="10 seconds"
+                          key="10秒"
                           onClick={() => setresetPostIn(1000 * 10)}
                         >
-                          10 seconds
+                          10秒
                         </DropdownItem>
                         <DropdownItem
                           onClick={() => setresetPostIn(1000 * 60 * 5)}
-                          key="5 minute"
+                          key="5分"
                         >
-                          5 minute
+                          5分
                         </DropdownItem>
                         <DropdownItem
-                          key="1 hours"
+                          key="1時間"
                           onClick={() => setresetPostIn(1000 * 3600)}
                         >
-                          1 hours{" "}
-                        </DropdownItem>
-                        <DropdownItem
-                          onClick={() => setresetPostIn(1000 * 3600)}
-                          key="12 hours"
-                        >
-                          12 hours
+                          1時間{" "}
                         </DropdownItem>
                         <DropdownItem
                           onClick={() => setresetPostIn(1000 * 3600)}
-                          key="never"
+                          key="12時間"
                         >
-                          never
+                          12時間
+                        </DropdownItem>
+                        <DropdownItem
+                          onClick={() => setresetPostIn(1000 * 3600)}
+                          key="一度もない"
+                        >
+                          一度もない
                         </DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
                   </div>
                 </ModalBody>
-                <ModalFooter>
+                {/* <ModalFooter>
                   <Button color="danger" variant="light" onPress={onClose}>
                     Close
                   </Button>
                   <Button color="primary" onPress={onClose}>
                     Action
                   </Button>
-                </ModalFooter>
+                </ModalFooter> */}
               </>
             )}
           </ModalContent>
